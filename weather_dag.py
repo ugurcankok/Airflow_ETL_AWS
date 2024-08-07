@@ -73,14 +73,14 @@ with DAG('weather_dag',
         is_weather_api_ready = HttpSensor(
         task_id ='is_weather_api_ready',
         http_conn_id='weathermap_api',
-        endpoint='/data/2.5/weather?q=Portland&APPID=5031cde3d1a8b9469fd47e998d7aef79'
+        endpoint='/data/2.5/weather?q=city&APPID=api_key'
         )
 
 
         extract_weather_data = SimpleHttpOperator(
         task_id = 'extract_weather_data',
         http_conn_id = 'weathermap_api',
-        endpoint='/data/2.5/weather?q=Portland&APPID=5031cde3d1a8b9469fd47e998d7aef79',
+        endpoint='/data/2.5/weather?q=city&APPID=api_key',
         method = 'GET',
         response_filter= lambda r: json.loads(r.text),
         log_response=True
